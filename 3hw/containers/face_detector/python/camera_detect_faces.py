@@ -11,9 +11,9 @@ face_cascade = cv.CascadeClassifier('/face_detect/haarcascades/haarcascade_front
 def get_face(frame):
     frame_gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(frame_gray)
-    frame_gray = cv.equalizeHist(frame_gray)
+    #frame_gray = cv.equalizeHist(frame_gray)
 
-    #faces = face_cascade.detectMultiScale(frame_gray, 1.3, 5)
+    faces = face_cascade.detectMultiScale(frame_gray, 1.3, 5)
 
     for (x,y,w,h) in faces:
         #center = (x + w//2, y + h//2)
