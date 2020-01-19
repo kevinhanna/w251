@@ -21,8 +21,8 @@ def get_face(frame):
         face = frame[y:y+h, x:x+w]
 
         rc,png = cv.imencode('.png', face)
-        msg = png.tobytes()
-        post_face(msg)
+        face = png.tobytes()
+        post_face(face)
         #filename = str(int(round(time.time() * 1000))) + '.png'
         #f = open('output/' + filename, 'w+b')
 	#f.write(msg)
@@ -31,7 +31,7 @@ def get_face(frame):
 def post_face(face):
     client.connect("local_mqtt_broker",1883,60)
     #client.connect("169.53.167.199",1883,60)
-    client.publish("topic/test", payload=face, qos=0, retain=False);
+    client.publish("topic/test", payload=face, qos=1, retain=False);
     client.disconnect();
 
 while(True):
