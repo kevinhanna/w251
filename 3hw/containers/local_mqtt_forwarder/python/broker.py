@@ -1,4 +1,5 @@
 import paho.mqtt.client as mqtt
+import time
 
 # This is the Subscriber
 
@@ -7,9 +8,16 @@ def on_connect(client, userdata, flags, rc):
   client.subscribe("topic/test")
 
 def on_message(client, userdata, msg):
-  if msg.payload.decode() == "Hello world!":
-    print("Yes!")
-    client.disconnect()
+    print(userdata)
+
+    filename = str(int(round(time.time() * 1000))) + '.png'
+    f = open('output/' + filename, 'w+b')
+    f.write(msg.payload)
+    f.close()
+
+#  if msg.payload.decode() == "Hello world!":
+#    print("Yes!")
+#    client.disconnect()
     
 client = mqtt.Client()
 #client.connect("THE_IP_ADDRESS_OF_OUR_BROKER",1883,60)
