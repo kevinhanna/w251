@@ -10,16 +10,15 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     filename = str(int(round(time.time() * 1000))) + '.png'
     print(filename)
-    f = open('output/' + filename, 'w+b')
-    f.write(msg.payload)
-    f.close()
+    try:
+        f = open('output/' + filename, 'w+b')
+        f.write(msg.payload)
+        f.close()
+    except:
+        print("Unexpected error:", sys.exc_info()[0])
 
-#  if msg.payload.decode() == "Hello world!":
-#    print("Yes!")
-#    client.disconnect()
-    
 client = mqtt.Client()
-client.connect("remote_mqtt_broker",1883,60)
+client.connect("remote_mqtt_broker",1883,20)
 client.on_connect = on_connect
 client.on_message = on_message
 
