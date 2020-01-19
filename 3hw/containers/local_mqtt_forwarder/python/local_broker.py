@@ -8,14 +8,14 @@ remote_client.connect("169.53.167.199",1883,60)
 
 def post_face_remote(face):
     try:
-        remote_client.publish("topic/test", payload=face, qos=0, retain=False);
+        remote_client.publish("w251/hw03/faces", payload=face, qos=0, retain=False);
     except:
         print("Unexpected error:", sys.exc_info()[0])
     #remote_client.disconnect();
 
 def on_connect(client, userdata, flags, rc):
   print("Connected with result code "+str(rc))
-  client.subscribe("topic/test",qos=1)
+  client.subscribe("w251/hw03/faces",qos=1)
 
 def on_message(client, userdata, msg):
     print("Forwarding face " + str(len(msg.payload)))
