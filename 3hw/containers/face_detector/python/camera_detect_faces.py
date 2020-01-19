@@ -30,6 +30,7 @@ def get_face(frame):
 
 def post_face(face):
     client.connect("local_mqtt_broker",1883,60)
+    #client.connect("169.53.167.199",1883,60)
     client.publish("topic/test", payload=face, qos=0, retain=False);
     client.disconnect();
 
