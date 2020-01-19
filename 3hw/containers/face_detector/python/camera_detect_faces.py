@@ -31,7 +31,7 @@ def get_face(frame):
 def post_face(face):
     client.connect("local_mqtt_broker",1883,60)
     #client.connect("169.53.167.199",1883,60)
-    client.publish("w251/hw03/faces", payload=face, qos=1, retain=False);
+    client.publish("w251/hw03/faces/capture", payload=face, qos=1, retain=False);
     client.disconnect();
 
 while(True):
