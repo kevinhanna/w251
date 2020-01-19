@@ -11,7 +11,7 @@ def on_message(client, userdata, msg):
     filename = str(int(round(time.time() * 1000))) + '.png'
     print(str(len(msg.payload)))
     try:
-        f = open('output/' + filename, 'w+b')
+        f = open('/mnt/kh-object/hw03/faces/' + filename, 'w+b')
         f.write(msg.payload)
         f.close()
     except:

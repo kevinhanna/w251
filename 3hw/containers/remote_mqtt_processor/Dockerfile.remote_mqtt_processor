@@ -3,3 +3,21 @@ FROM python:3-alpine
 RUN apk update
 RUN apk add mosquitto vim
 RUN pip install paho-mqtt 
+
+RUN apk --update add fuse alpine-sdk automake autoconf libxml2-dev fuse-dev curl-dev git bash;
+
+RUN git clone https://github.com/s3fs-fuse/s3fs-fuse.git; \
+ cd s3fs-fuse; \
+ ./autogen.sh; \
+ ./configure --prefix=/usr; \
+ make; \
+ make install; \
+ rm -rf /var/cache/apk/*;
+
+COPY keys/cos_creds /root/.cos_creds
+RUN chmod 600 /root/.cos_creds
+
+COPY scripts/startup.sh /
+RUN mkdir -m 777 /mnt/kh-object
+
+ENTRYPOINT /startup.sh && /bin/ash 
