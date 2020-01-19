@@ -5,7 +5,7 @@ import time
 
 def on_connect(client, userdata, flags, rc):
   print("Connected with result code "+str(rc))
-  client.subscribe("topic/test", qos=1)
+  client.subscribe("w251/hw03/faces", qos=1)
 
 def on_message(client, userdata, msg):
     filename = str(int(round(time.time() * 1000))) + '.png'
