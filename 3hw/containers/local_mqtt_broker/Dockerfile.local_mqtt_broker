@@ -3,3 +3,6 @@ FROM arm64v8/python:3-alpine
 RUN apk update
 RUN apk add mosquitto vim
 RUN pip install paho-mqtt 
+
+#ENTRYPOINT mosquitto -d && /bin/ash
+

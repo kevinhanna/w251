@@ -5,9 +5,8 @@ remote_client = mqtt.Client()
 # This is the Subscriber
 
 remote_client.connect("169.53.167.199",1883,60)
+
 def post_face_remote(face):
-    #remote_client.connect("169.53.167.199",1883,60)
-    #remote_client.connect("169.53.167.193",1883,60)
     try:
         remote_client.publish("topic/test", payload=face, qos=0, retain=False);
     except:
