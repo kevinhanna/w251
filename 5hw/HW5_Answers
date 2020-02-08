@@ -1,0 +1,179 @@
+1. What is TensorFlow? Which company is the leading contributor to TensorFlow?
+
+TensorFlow is an Open Source machine learning platform, developed by Google, who is the leading contributor.  It's developed in C++, with SDK's for multiple languages including Python, Java and Go.
+
+2. What is TensorRT? How is it different from TensorFlow?
+
+Tensor RT is an SDK for deep inference learning built on to of CUDA and developed by NVIDIA.  One of the differences is TensorFlow is optimized for Google's Tensor cores where TensorRT is optimized for CUDA cores and NVIDIA's tensor cores. 
+
+3. What is ImageNet? How many images does it contain? How many classes?
+
+ImageNet is an image dataset organized according to the WordNet hierarchy.  Classes are sysnsets multiple word per calls, and there are over 100,000 synsets.  There are 14,197,122 images in ImageNet. 
+
+4. Please research and explain the differences between MobileNet and GoogleNet (Inception) architectures.
+
+Both are CNN architectures, MobileNet was designed to run on low powered devices like phones and other edge devices like Jetson Nano, TX2 and Xavier.
+
+5. In your own words, what is a bottleneck?
+
+Bottlenecks are are reduction of dimesionality improving efficiency by reducing the number of parameters which can improve generalization. 
+
+6. How is a bottleneck different from the concept of layer freezing?
+
+Bottlenecks can be exported from a model providing the feature extraction speeding up transfer learning.  Every image is used multiple times in training, once that has run once, the bottle neck can be used in place of the previous layers.
+
+
+7. In the TF1 lab, you trained the last layer (all the previous layers retain their already-trained state). Explain how the lab used the previous layers (where did they come from? how were they used in the process?)
+
+We imported the trained weights and model and used transfer learning for the final layer.  The previous layers were frozen, and we trained the final layer.  Bottlenecks were created for each image, which sped up any further retraining when the same parameters were used. 
+
+8. How does a low --learning_rate (step 7 of TF1) value (like 0.005) affect the precision? How much longer does training take?
+
+Precision went up 0.5%, it increased the training time from 10:55 to 11:05, so 10 seconds, which is negligable. 
+
+9. How about a --learning_rate (step 7 of TF1) of 1.0? Is the precision still good enough to produce a usable graph?
+
+The precision is 87.6%, which isn't too far from the 90.6 from 0.005.  So on this subject matter, it's negligable. 
+
+
+10. For step 8, you can use any images you like. Pictures of food, people, or animals work well. You can even use ImageNet images. How accurate was your model? Were you able to train it using a few images, or did you need a lot?
+
+11. Run the TF1 script on the CPU (see instructions above) How does the training time compare to the default network training (section 4)? Why?
+
+12. Try the training again, but this time do export ARCHITECTURE="inception_v3" Are CPU and GPU training times different?
+
+Inception uses GPU, and takes longer. 
+
+13. Given the hints under the notes section, if we trained Inception_v3, what do we need to pass to replace ??? below to the label_image script? Can we also glean the answer from examining TensorBoard?
+
+
+
+
+
+mobilenet
+
+21:19:37
+21:30:32.180311 548106936336 retrain.py:1127] Final test accuracy = 90.1% (N=362)
+
+Evaluation time (1-image): 10.984s
+
+daisy (score=0.99910)
+dandelion (score=0.00051)
+sunflowers (score=0.00039)
+roses (score=0.00000)
+tulips (score=0.00000)
+
+
+Evaluation time (1-image): 8.872s
+
+roses (score=0.98792)
+tulips (score=0.01208)
+dandelion (score=0.00000)
+sunflowers (score=0.00000)
+daisy (score=0.00000)
+
+
+Learning 0.005
+21:35:37
+21:46:42.730890 548195934224 retrain.py:1127] Final test accuracy = 90.6% (N=362)
+
+
+Learning 1.0
+21:58:47
+22:09:35.798883 548267933712 retrain.py:1127] Final test accuracy = 87.6% (N=362)
+
+Learning rate 0.001
+22:23:49
+22:34:45.438005 548249763856 retrain.py:1127] Final test accuracy = 90.9% (N=362)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+inception_v3
+Tue Feb  4 00:17:19 UTC 2020
+
+
+
+I0204 00:20:40.244394 547963359248 retrain.py:1127] Final test accuracy = 89.2% (N=362)
+WARNING:tensorflow:From /root/tensorflow-for-poets-2/scripts/retrain.py:827: convert_variables_to_constants (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.compat.v1.graph_util.convert_variables_to_constants`
+W0204 00:20:41.723245 547963359248 deprecation.py:323] From /root/tensorflow-for-poets-2/scripts/retrain.py:827: convert_variables_to_constants (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.compat.v1.graph_util.convert_variables_to_constants`
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow_core/python/framework/graph_util_impl.py:277: extract_sub_graph (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.compat.v1.graph_util.extract_sub_graph`
+W0204 00:20:41.724499 547963359248 deprecation.py:323] From /usr/local/lib/python3.6/dist-packages/tensorflow_core/python/framework/graph_util_impl.py:277: extract_sub_graph (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.compat.v1.graph_util.extract_sub_graph`
+INFO:tensorflow:Froze 2 variables.
+I0204 00:20:43.027200 547963359248 graph_util_impl.py:334] Froze 2 variables.
+INFO:tensorflow:Converted 2 variables to const ops.
+I0204 00:20:43.645563 547963359248 graph_util_impl.py:394] Converted 2 variables to const ops.
+
+
+Tue Feb  4 01:02:08 UTC 2020
+
+INFO:tensorflow:Final test accuracy = 91.2% (N=362)
+I0204 01:21:30.804453 548518187024 retrain.py:1127] Final test accuracy = 91.2% (N=362)
+WARNING:tensorflow:From /root/tensorflow-for-poets-2/scripts/retrain.py:827: convert_variables_to_constants (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.compat.v1.graph_util.convert_variables_to_constants`
+W0204 01:21:32.590773 548518187024 deprecation.py:323] From /root/tensorflow-for-poets-2/scripts/retrain.py:827: convert_variables_to_constants (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.compat.v1.graph_util.convert_variables_to_constants`
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow_core/python/framework/graph_util_impl.py:277: extract_sub_graph (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.compat.v1.graph_util.extract_sub_graph`
+W0204 01:21:32.591632 548518187024 deprecation.py:323] From /usr/local/lib/python3.6/dist-packages/tensorflow_core/python/framework/graph_util_impl.py:277: extract_sub_graph (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.compat.v1.graph_util.extract_sub_graph`
+INFO:tensorflow:Froze 2 variables.
+I0204 01:21:34.162613 548518187024 graph_util_impl.py:334] Froze 2 variables.
+INFO:tensorflow:Converted 2 variables to const ops.
+I0204 01:21:35.163101 548518187024 graph_util_impl.py:394] Converted 2 variables to const ops.
+
+
+
+
+
+mobilenet_0.50_
+Tue Feb  4 00:25:53 UTC 2020
+
+INFO:tensorflow:2020-02-04 00:28:01.561776: Step 499: Validation accuracy = 87.0% (N=100)
+I0204 00:28:01.562247 548043579408 retrain.py:1101] 2020-02-04 00:28:01.561776: Step 499: Validation accuracy = 87.0% (N=100)
+INFO:tensorflow:Final test accuracy = 88.7% (N=362)
+I0204 00:28:02.560106 548043579408 retrain.py:1127] Final test accuracy = 88.7% (N=362)
+WARNING:tensorflow:From /root/tensorflow-for-poets-2/scripts/retrain.py:827: convert_variables_to_constants (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.compat.v1.graph_util.convert_variables_to_constants`
+W0204 00:28:03.482617 548043579408 deprecation.py:323] From /root/tensorflow-for-poets-2/scripts/retrain.py:827: convert_variables_to_constants (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.compat.v1.graph_util.convert_variables_to_constants`
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow_core/python/framework/graph_util_impl.py:277: extract_sub_graph (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.compat.v1.graph_util.extract_sub_graph`
+W0204 00:28:03.483863 548043579408 deprecation.py:323] From /usr/local/lib/python3.6/dist-packages/tensorflow_core/python/framework/graph_util_impl.py:277: extract_sub_graph (from tensorflow.python.framework.graph_util_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.compat.v1.graph_util.extract_sub_graph`
+INFO:tensorflow:Froze 2 variables.
+I0204 00:28:03.958257 548043579408 graph_util_impl.py:334] Froze 2 variables.
+INFO:tensorflow:Converted 2 variables to const ops.
+I0204 00:28:04.192355 548043579408 graph_util_impl.py:394] Converted 2 variables to const ops.
